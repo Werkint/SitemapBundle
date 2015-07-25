@@ -1,0 +1,32 @@
+{
+    "name":        "werkint/sitemap-bundle",
+    "type":        "symfony-bundle",
+    "description": "Bundle providing sitemap.xml",
+    "license":     "GPL-3.0+",
+    "authors":     [
+        {
+            "name":  "Bogdan Yurov",
+            "email": "bogdan@yurov.me"
+        }
+    ],
+    "require":     {
+        "doctrine/common":          "*",
+        "symfony/framework-bundle": "*",
+
+        "werkint/command-bundle": "*",
+
+        "php": ">=5.6"
+    },
+    "autoload":    {
+        "psr-4": {
+            "Werkint\\Bundle\\SitemapBundle\\":        "src/"
+        }
+    },
+    "extra":       {
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
+        }
+    },
+
+    "minimum-stability": "dev"
+}
