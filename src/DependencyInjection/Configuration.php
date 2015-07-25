@@ -34,7 +34,13 @@ class Configuration implements ConfigurationInterface
             ->root($this->alias)
             ->children()
                 ->scalarNode('target')->defaultValue('/sitemap.xml')->end()
-                ->arrayNode('languages')->defaultValue(['%kernel.default_locale%'])->end()
+                ->arrayNode('languages')
+                     ->beforeNormalization()
+                       ->ifTrue(function($v) { return $v === null; })
+                       ->then(function($v) { return ['%kernel.default_locale%']; })
+                     ->end()
+                ->prototype('scalar')->end()
+                ->end()
             ->end()
         ;
         // @formatter:on

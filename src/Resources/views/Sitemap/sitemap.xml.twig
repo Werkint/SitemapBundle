@@ -3,9 +3,14 @@
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
     {% for route in routes %}
       <url>
-        <loc>https://site.com/ru/</loc>
-        <xhtml:link rel="alternate" hreflang="en" href="https://site.com/en/"/>
-        <xhtml:link rel="alternate" hreflang="uk" href="https://site.com/uk/"/>
+        <loc>{{ url(route.route, route.parameters) }}</loc>
+        {% if route.lastModified %}
+          <lastmod>{{ route.lastModified|date('Y-m-d\TH:i:sP') }}</lastmod>
+          <changefreq>always</changefreq>
+        {% endif %}
+        {% for locale in locales %}
+          <xhtml:link rel="alternate" hreflang="{{ locale }}" href="{{ url(route.route, route.parameters|merge({'_locale': locale})) }}"/>
+        {% endfor %}
       </url>
     {% endfor %}
   </urlset>

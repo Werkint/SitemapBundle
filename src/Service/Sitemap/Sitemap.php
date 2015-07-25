@@ -2,31 +2,35 @@
 namespace Werkint\Bundle\SitemapBundle\Service\Sitemap;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Werkint\Bundle\FrameworkExtraBundle\Service\Logger\IndentedLoggerInterface;
 use Werkint\Bundle\CommandBundle\Service\Processor\Compile\CompileProviderInterface;
+use Werkint\Bundle\FrameworkExtraBundle\Service\Logger\IndentedLoggerInterface;
 
 /**
- * Sitemap.
+ * Строит sitemap.xml для сайта
  *
  * @author Aleksey
  * @author Odesskij<odesskij1992@gmail.com>
+ * @author Bogdan Yurov <bogdan@yurov.me>
  */
 class Sitemap implements
     CompileProviderInterface
 {
     protected $filepath;
+    protected $filedir;
     protected $compiler;
 
     /**
      * @param SitemapCompiler $compiler
-     * @param                 $filepath
+     * @param string          $filepath
+     * @param string          $filedir
      */
     public function __construct(
         SitemapCompiler $compiler,
+        $filedir,
         $filepath
-    )
-    {
+    ) {
         $this->filepath = $filepath;
+        $this->filedir = $filedir;
         $this->compiler = $compiler;
     }
 
@@ -36,12 +40,20 @@ class Sitemap implements
     public function process(
         IndentedLoggerInterface $out,
         ContainerAwareCommand $command = null
-    )
-    {
+    ) {
         $links = $this->getLinks();
         $data = $this->compiler->generateSitemap($links);
-        file_put_contents($this->filepath, $data);
+        file_put_contents($this->filedir . '/' . $this->filepath, $data);
         $out->writeln(count($links) . ' links processed');
+    }
+
+    /**
+     * @return string
+     */
+    public function dump()
+    {
+        $links = $this->getLinks();
+        return $this->compiler->generateSitemap($links);
     }
 
     /**
@@ -53,7 +65,7 @@ class Sitemap implements
         foreach ($this->providers as $provider) {
             $links = array_merge(
                 $links,
-                $provider->getLinks()
+                $provider->getRoutes()
             );
         }
         return $links;
@@ -71,8 +83,7 @@ class Sitemap implements
      */
     public function addProvider(
         SitemapProviderInterface $provider
-    )
-    {
+    ) {
         $this->providers[] = $provider;
     }
 }

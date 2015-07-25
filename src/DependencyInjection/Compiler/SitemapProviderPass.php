@@ -7,13 +7,14 @@ use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * SitemapProviderPass.
+ *
  * @author Odesskij<odesskij1992@gmail.com>
  */
 class SitemapProviderPass implements
     CompilerPassInterface
 {
-    const CLASS_SRV = 'werkint.util.sitemap';
-    const CLASS_TAG = 'werkint.util.sitemap.provider';
+    const CLASS_SRV = 'werkint_sitemap.sitemap';
+    const CLASS_TAG = 'werkint_sitemap.provider';
 
     /**
      * {@inheritdoc}

@@ -4,12 +4,12 @@ namespace Werkint\Bundle\SitemapBundle\Service\Sitemap;
 /**
  * SitemapProviderInterface.
  *
- * @author Aleksey
+ * @author Bogdan Yurov <bogdan@yurov.me>
  */
 interface SitemapProviderInterface
 {
     /**
-     * @return array
+     * @return array|SitemapRoute[]
      */
-    public function getLinks();
+    public function getRoutes();
 } 

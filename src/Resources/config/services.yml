@@ -5,18 +5,18 @@ parameters:
     Werkint\Bundle\SitemapBundle\Service\Sitemap\SitemapCompiler
 
 services:
-  #Sitemap
+  # Sitemap
   werkint_sitemap.sitemap:
     class: %werkint_sitemap.sitemap.class%
     arguments:
       - @werkint_sitemap.sitemapcompiler
+      - %kernel.root_dir%/../web
       - %werkint_sitemap.target%
     tags:
-      - { name: werkint_command.compile, class: werkint.util.sitemap, priority: -100 }
+      - { name: werkint_command.compile, class: werkint_sitemap.sitemap, priority: -100 }
   werkint_sitemap.sitemapcompiler:
     class: %werkint_sitemap.sitemapcompiler.class%
     arguments:
-      - @router
-      - @werkint.objectrouter
+      - @templating
       - @=parameter('werkint_sitemap')['languages']
       - %kernel.default_locale%

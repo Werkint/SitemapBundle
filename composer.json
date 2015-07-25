@@ -12,6 +12,7 @@
     "require":     {
         "doctrine/common":          "*",
         "symfony/framework-bundle": "*",
+        "jms/di-extra-bundle":      "*",
 
         "werkint/command-bundle": "*",
 
