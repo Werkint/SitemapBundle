@@ -1,0 +1,22 @@
+parameters:
+  werkint_sitemap.sitemap.class:
+    Werkint\Bundle\SitemapBundle\Service\Sitemap\Sitemap
+  werkint_sitemap.sitemapcompiler.class:
+    Werkint\Bundle\SitemapBundle\Service\Sitemap\SitemapCompiler
+
+services:
+  #Sitemap
+  werkint_sitemap.sitemap:
+    class: %werkint_sitemap.sitemap.class%
+    arguments:
+      - @werkint_sitemap.sitemapcompiler
+      - %werkint_sitemap.target%
+    tags:
+      - { name: werkint_command.compile, class: werkint.util.sitemap, priority: -100 }
+  werkint_sitemap.sitemapcompiler:
+    class: %werkint_sitemap.sitemapcompiler.class%
+    arguments:
+      - @router
+      - @werkint.objectrouter
+      - @=parameter('werkint_sitemap')['languages']
+      - %kernel.default_locale%
