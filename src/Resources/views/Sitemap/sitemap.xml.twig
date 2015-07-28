@@ -5,7 +5,7 @@
       <url>
         <loc>{{ url(route.route, route.parameters) }}</loc>
         {% if route.lastModified %}
-          <lastmod>{{ route.lastModified|date('Y-m-d\TH:i:sP') }}</lastmod>
+          <lastmod>{{ route.lastModified|date('Y-m-d\\TH:i:sP') }}</lastmod>
           <changefreq>always</changefreq>
         {% endif %}
         {% for locale in locales %}
